@@ -1,17 +1,3 @@
-"""
-Free, local version of the agent layer -- uses Ollama's tool-calling instead of the
-Anthropic API. Requires a model that supports tool use (llama3.1, qwen2.5,
-mistral-nemo, firefunction-v2 all work; smaller/older models often don't).
-
-Setup:
-    ollama pull llama3.1
-    pip install -r requirements-local.txt
-
-Note: local models are noticeably less reliable at deciding *when* to call a tool
-and at following the citation instruction than Claude is. Expect to iterate on the
-system prompt more, and document that iteration in your README -- it's a legitimate
-part of the "prompt engineering / failure modes" story for this project.
-"""
 import ollama
 from rag import retrieve
 
@@ -63,7 +49,18 @@ SYSTEM_PROMPT = (
     "a calculator. When you use retrieve_documents, cite the source filename and page "
     "number in your final answer. When you don't have enough information, say so rather "
     "than guessing. Only use the calculator on numbers you actually retrieved or the user "
-    "gave you -- never invent figures."
+    "gave you -- never invent figures.\n\n"
+    "For questions involving more than one company, time period, or comparison: retrieve "
+    "information for EACH entity or period separately, using a distinct, specific "
+    "retrieve_documents call for each one. Do not answer a comparison using data for only "
+    "one side of it.\n\n"
+    "If a question asks for a rate, growth percentage, or margin that is not explicitly "
+    "stated in the documents but CAN be computed from numbers you retrieved (e.g. revenue "
+    "and cost of revenue), use the calculate tool to compute it. Do not say the information "
+    "is unavailable if the underlying numbers were actually retrieved.\n\n"
+    "If a question asks you to list multiple items (e.g. all business segments, all risk "
+    "factors) and your first retrieval seems incomplete or partial, retrieve again with a "
+    "more specific query before finalizing your answer."
 )
 
 

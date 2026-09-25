@@ -1,12 +1,3 @@
-"""
-Local, free version of the retrieval layer -- uses Ollama instead of the Anthropic API.
-No API costs, but requires Ollama installed locally and a model pulled.
-
-Setup:
-    1. Install Ollama: https://ollama.com/download
-    2. Pull a model:   ollama pull llama3.1
-    3. pip install -r requirements-local.txt
-"""
 import chromadb
 from sentence_transformers import SentenceTransformer
 import ollama
@@ -14,7 +5,7 @@ import ollama
 DB_DIR = "chroma_db"
 EMBED_MODEL = "all-MiniLM-L6-v2"
 LLM_MODEL = "llama3.1"   # swap for any model you've pulled, e.g. "mistral", "qwen2.5"
-TOP_K = 5
+TOP_K = 8
 
 _embed_model = None
 _collection = None

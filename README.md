@@ -12,6 +12,15 @@ This project answers questions with cited sources and can combine document retri
 3. **Agent** (`agent.py`) — wraps retrieval as a tool alongside a calculator tool, so
    the model decides per-question whether to search documents, compute a number, or both.
 
+## Running the evaluation
+1. Edit `eval_questions.csv` add your questions to this document
+2. Run `python run_eval.py` — this runs every question through the agent and saves
+   answers to `eval_results.csv`.
+3. Open `eval_results.csv`, read each answer, and fill in the `correct` column with
+   `y` or `n`. Add notes on *why* something failed in the `notes` column. This feature helps check accuracy.
+4. Run `python score_eval.py` to get overall accuracy and a breakdown by category
+   (factual / calculation / unanswerable / ambiguous).
+
 ## Setup
 
 This project is fully local and free — runs on Ollama, no API costs.

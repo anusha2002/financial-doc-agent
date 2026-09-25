@@ -1,9 +1,3 @@
-"""
-Ingest PDFs from ./docs, chunk them, embed with a local model, and store in Chroma.
-
-Usage:
-    python ingest.py
-"""
 import os
 import glob
 from pypdf import PdfReader
